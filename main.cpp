@@ -11,33 +11,36 @@
 using namespace std;
 int main()
 {
-///Assume I have data in  two dimensional matrix
+// 2-D data
 const int NROW=100;
 const int NCOL=10;
-double data[NROW][NCOL];
+float data[NROW][NCOL];
 vector< vector<float> > dt;
 for(int i=0;i<NROW;i++)
-{ vector<float> x;
+{
+	vector<float> x;
 	for(int j=0;j<NCOL;j++)
 	{
 		data[i][j]=(j+i)*rand()/((float)RAND_MAX+1);
-       // cout<<data[i][j]<<"\t";
-	 x.push_back(data[i][j]);
+    	 x.push_back(data[i][j]);
 	}
 	dt.push_back(x);
 	x.clear();
-	//cout<<endl;
 }
-Data *train= new Data(dt,NCOL,NROW);
-cout<<train->ncols;
+//Data input
+Data train;
+train.data = dt;
+train.ncols=NCOL;
+train.nrows=NROW;
+
 int ntree=10;
-IsolationForest *iff = new IsolationForest();
-iff->buildForest(ntree,*train,ceil(log2(train->nrows)));
-
-
-
-
-
+int nsample=256;
+bool rsample=true;
+int maxheight = (int)ceil(log2(NROW));
+IsolationForest *iff;
+iff =new IsolationForest(ntree,train,maxheight,nsample,rsample);
+Data test = train;
+iff->AnomalyScore(test);
 
 }
 

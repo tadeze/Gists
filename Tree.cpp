@@ -5,9 +5,13 @@
  *      Author: Tadeze
  */
 #include "classes.hpp"
+#include "utility.h"
+
 using namespace std;
+
 Tree::~Tree() {
 	// TODO Auto-generated destructor stub
+
 }
 
 
@@ -20,7 +24,7 @@ Tree::Tree(Data data,int height,int maxheight)
 	}
 
 	// Set size of the node
-  this->nodeSize=data.nrows;
+  nodeSize = data.nrows;
   if(data.nrows<2 || height==maxheight)
 	  return;
   //compute min and max
@@ -31,7 +35,7 @@ Tree::Tree(Data data,int height,int maxheight)
 	 minmax[1][j]=minmax[0][j];
  }
  for(int i=0;i<data.nrows;i++) {
-    float* inst= data.data[i];
+    vector<float> inst= data.data[i];
 	 for(int j=0;j<data.ncols;j++)
 	 {
 		 if(inst[j]<minmax[0][j])
@@ -41,7 +45,7 @@ Tree::Tree(Data data,int height,int maxheight)
 	 }
 
  }
- vector<int> attributes = new vector<int>();
+ vector<int> attributes;
  for(int j=0;j<data.ncols;j++)
  {
 	 if(minmax[0][j]<minmax[1][j]){
@@ -50,17 +54,18 @@ Tree::Tree(Data data,int height,int maxheight)
  }
  if(attributes.size()==0)
 	 return ;
-//Randomly pick an attribute and split point
+//Randomly pick an attribute and a split point
 
- this->splittingAtt = attributes[ceil(attributes.size()* rand()/(float)RAND_MAX)];
- this->splittingPoint = rand()/(float)RAND_MAX *(minmax[1][this->splittingAtt] - minmax[0][this->splittingAtt]);
+ this->splittingAtt = attributes[randomI(0,attributes.size())];
+ this->splittingPoint =(double) rand()/(RAND_MAX+1) *(minmax[1][this->splittingAtt] - minmax[0][this->splittingAtt]);
  //Create sub-treee
  vector<vector<float> > lnodeData;
  vector<vector<float> > rnodeData;
- //divide the data into left and righ tree
+
+//Split the node into two
  for(int j=0;j<data.nrows;j++)
  {
-	 if(data.data[j][this->splittingAtt] > this->splittingPoint)
+	 if(data.data[j][splittingAtt] > splittingPoint)
 	 {
 		 lnodeData.push_back(data.data[j]);
 	 }
@@ -69,19 +74,30 @@ Tree::Tree(Data data,int height,int maxheight)
 		 rnodeData.push_back(data.data[j]);
 	 }
 
+ leftChild= new Tree((Data){data.ncols,lnodeData.size(),lnodeData},height+1,maxheight);
+ leftChild->parent=this;
+ leftChild->depth = this->depth +1;
 
- this->leftChild=new Tree(new Data(lnodeData,data.ncols,lnodeData.size()),height+1,maxheight);
- this->leftChild->parent=this;
- this->leftChild->depth = this->depth +1;
-
- this->rightChild=new Tree(new Data(lnodeData,data.ncols,lnodeData.size()),height+1,maxheight);
- this->rightChild->parent=this;
- this->rightChild->depth = this->depth +1;
+ rightChild= new Tree((Data){data.ncols,lnodeData.size(),lnodeData},height+1,maxheight);
+ rightChild->parent=this;
+ rightChild->depth = this->depth +1;
  }
-//now split the data in the node,
-  //send the node and the data to a function
- //choose random attribute
- //choose max and min of the attribute a
- //
 }
+
+
+double Tree::pathLength(vector<float> inst)
+{
+
+    if (this->leftChild == NULL) {
+      return avgPL(this->nodeSize);
+    }
+    if (inst[this->splittingAtt] < this->splittingPoint) {
+      return this->leftChild->pathLength(inst) +1.0;
+
+    }
+    else {
+      return this->rightChild->pathLength(inst) +1.0;
+    }
+}
+
 

@@ -12,49 +12,54 @@
 #include<stdlib.h>
 #include<cmath>
 #include<vector>
+
 using namespace std;
 
-class Data{
-public:
+
+
+struct Data{
 int ncols;
 int nrows;
 vector<vector<float> > data;
- Data(vector<vector<float> > dt,int ncols,int nrows);
 };
 
- Data::Data(vector<vector<float> > dt,int ncols,int nrows)
-{
-this->data=dt;
-this->ncols=ncols;
-this->nrows=nrows;
-}
 class Tree {
+public:
 	Tree *leftChild;
 	Tree *rightChild;
 	Tree *parent;
 	int nodeSize;
 	int splittingAtt;
-	double splittingVal;
+	double splittingPoint;
 	int depth;
-	Tree();
+	vector<int> nodeIndx;
+	Tree() {};
     Tree(Data data, int height,int maxHeight);
 	virtual ~Tree();
+	double pathLength(vector<float> inst);
 };
 
 class IsolationForest {
 public:
-    Tree *trees;
+    vector<Tree*> trees;
     Data *data;
+    int ntree;
+    bool rSample;
+    int nsample;
 	IsolationForest();
+	IsolationForest(int ntree,Data data,int maxheight,const int nsample,bool rSample);
 	virtual ~IsolationForest();
 	void readData(string filename);
 	void buildForest(int ntree, Data data,int maxheight);
-	void AnomalyScore();
+	float instanceScore(vector<float> inst);
+
+	vector<float> AnomalyScore(Data data);
 };
 
 
-float c(int nodeSize){
-	return NULL;
-}
+
+
+
+
 
 #endif /* CLASSES_HPP_ */
