@@ -7,21 +7,21 @@
 
 #ifndef TREE_H_
 #define TREE_H_
+#include<classes.hpp>
 
-namespace iForest {
 
 class Tree {
-	Tree *leftChild;
+	Tree *child;
 	Tree *rightChild;
 	Tree *parent;
 	int splittingAtt;
-	double splittingVal;
+	float splittingPoint;
 	int depth;
-	Tree();
-
+	Tree(Data data, int height,int maxHeight);
 	virtual ~Tree();
+	double pathLength(vector<float> inst);
 };
 
-} /* namespace iForest */
+ /* namespace iForest */
 
 #endif /* TREE_H_ */

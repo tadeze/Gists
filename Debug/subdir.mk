@@ -4,26 +4,22 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-<<<<<<< HEAD
+../IsolationForest.cpp \
 ../Tree.cpp \
-../main.cpp 
-
-OBJS += \
-./Tree.o \
-./main.o 
-
-CPP_DEPS += \
-./Tree.d \
-./main.d 
-=======
+../main.cpp \
 ../test.cpp 
 
 OBJS += \
+./IsolationForest.o \
+./Tree.o \
+./main.o \
 ./test.o 
 
 CPP_DEPS += \
+./IsolationForest.d \
+./Tree.d \
+./main.d \
 ./test.d 
->>>>>>> b2bb1fb89e007de7b1e19d605d0d57f36e3627db
 
 
 # Each subdirectory must supply rules for building sources it contributes
