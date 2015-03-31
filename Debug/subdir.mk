@@ -6,17 +6,20 @@
 CPP_SRCS += \
 ../IsolationForest.cpp \
 ../Tree.cpp \
-../main.cpp 
+../main.cpp \
+../utility.cpp 
 
 OBJS += \
 ./IsolationForest.o \
 ./Tree.o \
-./main.o 
+./main.o \
+./utility.o 
 
 CPP_DEPS += \
 ./IsolationForest.d \
 ./Tree.d \
-./main.d 
+./main.d \
+./utility.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
