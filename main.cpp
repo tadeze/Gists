@@ -7,19 +7,22 @@
 #include<iostream>
 #include<fstream>
 #include<cstdlib>
+#include<ctime>
 #include "classes.hpp"
 #include "utility.h"
 using namespace std;
 int main()
 {
+
+//TODO: check on real csv file and compare with implemented algorithms
 srand(time(NULL));
 //input parameters
-int ntree=1000;
+int ntree=100;
 int nsample=256;
 bool rsample=true;
 
 //Prepare synthetic data
-const int NROW=10000;
+const int NROW=1000;
 const int NCOL=40;
 float data[NROW][NCOL];
 vector< vector<float> > dt;
@@ -50,7 +53,6 @@ train.nrows=NROW;
 //forest configuration
 int maxheight =(int)ceil(log2(NROW));
 IsolationForest iff(ntree,train,maxheight,nsample,rsample);
-
 //Scores
 ofstream scoref;
 scoref.open("scores.csv");

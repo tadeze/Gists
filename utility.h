@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include<iostream>
 #include<ctime>
+#include<vector>
 int randomI(int min,int max);
 void sampleI(int min,int max,int nsample,int *sampleIndx);
 double avgPL(double n);

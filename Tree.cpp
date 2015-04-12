@@ -13,7 +13,9 @@ void Tree::iTree(Data data, int height,int maxheight)
 	// Set size of the node
 	  nodeSize = data.nrows;
 	  if(data.nrows<=1 || this->depth>maxheight)
+	  {   this->isLeaf=true;
 		  return;
+	  }
 	  //compute min and max of the attribute
 	 double minmax[2][data.ncols];
 	 for(int j=0;j<data.ncols;j++)
@@ -85,7 +87,8 @@ void Tree::iTree(Data data, int height,int maxheight)
 double Tree::pathLength(vector<float> inst)
 {
 
-    if (this->leftChild == NULL || this->rightChild==NULL || this->splittingAtt==-1) {
+    if (this->isLeaf) //leftChild == NULL || this->rightChild==NULL || this->splittingAtt==-1) //if it is leaf node.
+    {
       return avgPL(this->nodeSize);
     }
 

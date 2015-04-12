@@ -20,6 +20,7 @@ this->nsample = nsample;
 this->ntree=ntree;
 Data sampleData;
 int sampleIndex[nsample];
+this->rSample=rSample;
 for(int n=0;n<ntree;n++)
 {
     	if(rSample==true && nsample<data.nrows)
@@ -56,7 +57,8 @@ float IsolationForest::instanceScore(vector<float> inst)
 	//pointer based
 	for(vector<Tree*>::iterator it=this->trees.begin();it!=trees.end();++it)
 	{
-	avgPathLength += (*it)->pathLength(inst);
+
+		avgPathLength += (*it)->pathLength(inst);
 
 	}
 	float scores;
