@@ -1,0 +1,12 @@
+Build the library to static/dynamic library using the following command 
+
+g++ -c test.cpp -o libtest.o
+ar rcs libtest.a libtest.o
+
+
+Then build the cython wrapping using 
+
+python setup.py build_ext --inplace 
+
+Then test the test.so as normal python package. 
+
