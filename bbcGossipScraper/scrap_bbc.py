@@ -42,8 +42,8 @@ def scrap_it():
         result =[]
          #all_gossips[]
         result = [published_date,par.get_text(),None if par.a is None else par.a['href']]
-        all_gossip.append(result)
-         # Create the gossip object
+        #all_gossip.append(result)
+        # Create the gossip object
         gossip = Gossip(link = result[2],
                  article = result[1],
                  created = result[0])
